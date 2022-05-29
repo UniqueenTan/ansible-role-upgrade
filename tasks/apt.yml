@@ -80,3 +80,14 @@
   ansible.builtin.set_fact:
     service_restarts: "{{ service_restarts_apt.stdout_lines }}"
   when: "service_restarts_apt.stdout_lines | length"
+  
+- name: "Reboot the server"
+  reboot:
+    reboot_timeout: 1800
+  when: false
+
+- name: "Upgrade OS to 20.04"
+  ansible.builtin.shell: |
+    sudo do-release-upgrade -f DistUpgradeViewNonInteractive
+
+  register: display
